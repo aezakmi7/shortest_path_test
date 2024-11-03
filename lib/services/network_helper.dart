@@ -1,13 +1,10 @@
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 
 class NetworkHelper {
-  final Dio dio;
-
-  NetworkHelper({required this.dio});
-  Future<dynamic> get({required String url}) async {
+  Future<http.Response> getResponse({required String url}) async {
     try {
-      final response = await dio.get(url);
-      return response.data;
+      final response = await http.get(Uri.parse(url));
+      return response;
     } catch (e) {
       throw Exception(e);
     }
