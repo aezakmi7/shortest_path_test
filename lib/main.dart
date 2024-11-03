@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/home_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -26,6 +28,11 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Hello, World!');
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home Screen'),
+      ),
+      body: const HomeScreen(),
+    );
   }
 }
