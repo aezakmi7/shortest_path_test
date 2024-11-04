@@ -18,17 +18,21 @@ class AppConfigRepository implements IAppConfigRepo {
   final NetworkHelper _dataProvider = NetworkHelper();
   late String _lastEndpoint;
 
+  Future<List<AppConfigModel>> _fetchConfigs(String endpoint) async {
+    final response = await _dataProvider.getRequest(url: endpoint);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> decodedBody = json.decode(response.body);
+      return JsonMapper.mapAppConfigs(decodedBody: decodedBody);
+    } else {
+      throw 'Error loading app configs';
+    }
+  }
+
   @override
   Future<List<AppConfigModel>> getAppConfigs({required String endpoint}) async {
     try {
-      final response = await _dataProvider.getRequest(url: endpoint);
       _lastEndpoint = endpoint;
-      if (response.statusCode == 200) {
-        Map<String, dynamic> decodedBody = json.decode(response.body);
-        return JsonMapper.mapAppConfigs(decodedBody: decodedBody);
-      } else {
-        throw 'Error loading app configs';
-      }
+      return await _fetchConfigs(endpoint);
     } catch (e) {
       rethrow;
     }
@@ -39,7 +43,6 @@ class AppConfigRepository implements IAppConfigRepo {
       List<CalculatingResultModel> processingResults) async {
     try {
       var encoded = json.encode(processingResults);
-
       var response = await _dataProvider.postRequest(
         url: _lastEndpoint,
         jsonBody: encoded,
