@@ -25,10 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
   String errorMessage = '';
   bool isLoading = false;
   List<AppConfigModel> appConfigs = [];
+  late TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = TextEditingController();
     _loadApiLinkFromSettings();
   }
 
@@ -37,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (savedApiLink != null) {
       setState(() {
         apiLinkInput = savedApiLink;
+        _controller.text = savedApiLink;
       });
     }
   }
@@ -112,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               apiLinkInput = input;
                             });
                           },
-                          controller: TextEditingController(text: apiLinkInput),
+                          controller: _controller,
                           decoration: InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: 'API URL',
