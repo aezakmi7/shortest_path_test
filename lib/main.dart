@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Test Task',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color.fromARGB(0, 255, 255, 255),
+          seedColor: Color.fromARGB(0, 189, 67, 67),
         ),
         useMaterial3: true,
       ),

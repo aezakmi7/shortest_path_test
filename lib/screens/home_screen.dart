@@ -92,59 +92,63 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              const Text(
-                'Set valid API base URL in order to continue',
-                style: TextStyle(fontSize: 16),
-              ),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.compare_arrows),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: TextField(
-                      onChanged: (input) {
-                        setState(() {
-                          apiLinkInput = input;
-                        });
-                      },
-                      controller: TextEditingController(text: apiLinkInput),
-                      decoration: InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: 'API URL',
+                  const Text(
+                    'Set valid API base URL in order to continue',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.link_outlined),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: TextField(
+                          onChanged: (input) {
+                            setState(() {
+                              apiLinkInput = input;
+                            });
+                          },
+                          controller: TextEditingController(text: apiLinkInput),
+                          decoration: InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'API URL',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (errorMessage.isNotEmpty)
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          errorMessage,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.error),
+                        ),
                       ),
                     ),
-                  ),
+                  if (isLoading)
+                    Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
                 ],
               ),
-              if (errorMessage.isNotEmpty)
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      errorMessage,
-                      style:
-                          TextStyle(color: Theme.of(context).colorScheme.error),
-                    ),
-                  ),
-                ),
-              if (isLoading)
-                Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: CustomElevatedButton(
-                    onPressed: isLoading ? null : _getAppConfigs,
-                    text: 'Start counting process',
-                  ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: CustomElevatedButton(
+                  onPressed: isLoading ? null : _getAppConfigs,
+                  text: 'Start counting process',
                 ),
               ),
             ],

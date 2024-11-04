@@ -9,4 +9,18 @@ class NetworkHelper {
       rethrow;
     }
   }
+
+  Future<http.Response> postRequest(
+      {required String url, required String jsonBody}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonBody,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -37,6 +37,21 @@ class AppConfigRepository implements IAppConfigRepo {
   @override
   Future<ValidatingResultModel> sendResults(
       List<CalculatingResultModel> processingResults) async {
-    throw UnimplementedError();
+    try {
+      var encoded = json.encode(processingResults);
+
+      var response = await _dataProvider.postRequest(
+        url: _lastEndpoint,
+        jsonBody: encoded,
+      );
+
+      if (response.statusCode == 200) {
+        return ValidatingResultModel.fromRawJson(response.body);
+      } else {
+        throw 'Error sending results';
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 }

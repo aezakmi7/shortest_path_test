@@ -4,6 +4,7 @@ import '../models/app_config_model.dart';
 import '../models/calculating_result_model.dart';
 import '../services/app_processor.dart';
 import '../widgets/custom_elevated_button.dart';
+import 'result_list_screen.dart';
 
 class CalculationScreen extends StatefulWidget {
   final List<AppConfigModel> appConfigs;
