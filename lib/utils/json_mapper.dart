@@ -1,9 +1,9 @@
-import '../models/data_model.dart';
+import 'package:shortest_path_test/models/app_config_model.dart';
 
 class JsonMapper {
-  static List<DataModel> mapGameConfigs({dynamic decodedBody}) {
+  static List<AppConfigModel> mapAppConfigs({dynamic decodedBody}) {
     return (decodedBody['data'] as List)
-        .map((config) => DataModel.fromJson(config))
+        .map((config) => AppConfigModel.fromJson(config))
         .toList();
   }
 }
